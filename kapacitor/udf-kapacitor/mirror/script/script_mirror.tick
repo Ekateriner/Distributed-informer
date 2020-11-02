@@ -1,0 +1,12 @@
+dbrp "telegraf"."autogen"
+
+var cpu = stream
+    |from()
+        .measurement('cpu')
+        .groupBy('host')
+    |window()
+        .period(1m)
+        .every(1m)
+    @mirror()
+    |log()
+

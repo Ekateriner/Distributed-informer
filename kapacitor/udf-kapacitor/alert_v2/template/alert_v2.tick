@@ -1,0 +1,31 @@
+dbrp "telegraf"."autogen"
+
+var field string
+var measure string
+var groups = [*]
+var filter = lambda: TRUE
+var period = 1m
+var formula string
+var task_id int
+var file_json string
+// path = "file:///data/.kapacitor/load/sideloadFiles"
+// var file = string: "Crit.yml"
+
+stream
+    |from()
+        .measurement(measure)
+        .where(filter)
+        .groupBy(groups)
+    @tag_add()
+        .source(file_json)
+        .task_id(task_id)
+    |groupBy('level_id')
+    |alert()
+        .info(lambda: field > float("info"))
+        .infoReset(lambda: field < float("infoReset"))
+        .warn(lambda: field > float("warn"))
+        .warnReset(lambda: field < float("warnReset"))
+        .crit(lambda: field > float("crit"))
+        .critReset(lambda: field < float("critReset"))
+    |log()
+

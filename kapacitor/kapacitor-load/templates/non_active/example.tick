@@ -1,0 +1,15 @@
+dbrp "telegraf"."autogen"
+
+var measure string
+var groups = [*]
+var filter = lambda: TRUE
+var period = 1m
+
+stream
+    |from()
+        .measurement(measure)
+        .where(filter)
+        .groupBy(groups)
+    @mirror()
+    |log()
+

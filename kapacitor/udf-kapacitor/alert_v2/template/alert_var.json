@@ -1,0 +1,7 @@
+{
+    "measure": {"type": "string", "value": "mem"},
+    "file_json": {"type": "string", "value": "dict.json"},
+    "task_id": {"type": "int", "value": "1"},
+    "field": {"type": "string", "value": "free"},
+    "groups": {"type": "list", "value": [{"type": "string", "value": "host"}]}
+}

@@ -1,0 +1,20 @@
+dbrp "telegraf"."autogen"
+
+var field string
+var as string
+var measure string
+var groups = [*]
+var filter = lambda: TRUE
+var duration string
+
+stream
+    |from()
+        .measurement(measure)
+        .where(filter)
+        .groupBy(groups)
+    @predict()
+        .field(field)
+        .as(as)
+        .duration(duration)
+    |log()
+

@@ -1,0 +1,25 @@
+dbrp "telegraf"."autogen"
+
+var field string
+var measure string
+var groups = [*]
+var filter = lambda: TRUE
+var period = 1m
+var formula string
+var file string
+// path = "file:///data/.kapacitor/load/sideloadFiles"
+// var file = string: "Crit.yml"
+
+stream
+    |from()
+        .measurement(measure)
+        .where(filter)
+        .groupBy(groups)
+    @alert()
+        .source(file)
+        .formula(formula)
+    |alert()
+        .crit(lambda: 'formula_result' > 'critical_level')
+        .message('message')
+    |log()
+

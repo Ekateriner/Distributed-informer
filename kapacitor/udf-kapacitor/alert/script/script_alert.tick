@@ -1,0 +1,13 @@
+dbrp "telegraf"."autogen"
+
+var cpu = stream
+    |from()
+        .measurement('mem')
+        .groupBy('host')
+    @alert()
+        .source('Crit.txt')
+        .formula('(used / total) * 100')
+    |alert()
+        .crit(lambda: 'formula_result' > 'critical_level')
+    |log()
+

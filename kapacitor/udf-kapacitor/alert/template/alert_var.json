@@ -1,0 +1,6 @@
+{
+    "measure": {"type": "string", "value": "mem"},
+    "file": {"type": "string", "value": "Crit.txt"},
+    "formula": {"type": "string", "value": "(used / total) * 100"},
+    "groups": {"type": "list", "value": [{"type": "string", "value": "host"}]}
+}

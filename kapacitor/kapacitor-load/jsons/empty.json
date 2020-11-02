@@ -1,0 +1,4 @@
+{
+    "measure": {"type":"string", "value": "cpu"},
+    "field": {"type": "string", "value": "usage_user"}
+}

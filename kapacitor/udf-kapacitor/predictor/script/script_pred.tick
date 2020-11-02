@@ -1,0 +1,12 @@
+dbrp "telegraf"."autogen"
+
+var cpu = stream
+    |from()
+        .measurement('cpu')
+        .groupBy('host')
+    @predict()
+        .field('usage_idle')
+        .as('prediction')
+        .duration('1m')
+    |log()
+

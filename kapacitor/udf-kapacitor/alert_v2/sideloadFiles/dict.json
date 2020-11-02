@@ -1,0 +1,20 @@
+[
+    { 
+        "level_id": "324i",
+        "info": 14.5,
+        "infoReset": 13.5,
+        "warn": 14.5,
+        "warnReset": 13.5,
+        "crit": 14.5,
+        "critReset": 13.5
+    },
+    {
+        "level_id": "333i",
+        "warn": 78,
+        "warnReset": 70,
+        "info": 14.5,
+        "infoReset": 13.5,
+        "crit": 14.5,
+        "critReset": 13.5
+    }
+]

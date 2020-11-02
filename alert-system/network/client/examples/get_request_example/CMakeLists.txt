@@ -1,0 +1,5 @@
+add_executable(get_request_example main.cpp)
+
+target_link_libraries(get_request_example network)
+
+my_target_link_cpprest(get_request_example)

@@ -1,0 +1,18 @@
+dbrp "telegraf"."autogen"
+
+var base_test = stream
+    |from()
+        .measurement('mem')
+        .groupBy('host')
+    @tag_add()
+       .source('dict.json')
+       .task_id(1)
+    |groupBy('level_id')
+    |alert()
+        .info(lambda: "used" > float("info"))
+        .infoReset(lambda: "used" < float("infoReset"))
+        .warn(lambda: "used" > float("warn"))
+        .warnReset(lambda: "used" < float("warnReset"))
+        .crit(lambda: "used" > float("crit"))
+        .critReset(lambda: "used" < float("critReset"))
+    |log()

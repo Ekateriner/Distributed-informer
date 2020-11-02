@@ -1,0 +1,43 @@
+syntax = "proto2";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/duration.proto";
+
+package alert;
+
+enum Level {
+  INFO = 0;
+  WARN = 1;
+  CRIT = 2;
+}
+
+enum FilterStatus {
+  UNKNOWN = 0;
+  TO_BE_SENT = 1;
+  TO_BE_EDITED = 2;
+  IGNORED = 3;
+  DELAYED = 4;
+}
+
+message Metric {
+  optional google.protobuf.Timestamp time = 1;
+  map<string, double> values = 2;
+}
+
+message Series {
+  optional string name = 1;
+  optional string subscription_id = 2;
+  map<string, string> tags = 3;
+  repeated Metric metrics = 4;
+}
+
+message Alert {
+  required google.protobuf.Timestamp time = 1;
+
+  optional google.protobuf.Duration duration = 2;
+  optional Level level = 3;
+  optional Level previous_level = 4;
+  repeated Series series = 5;
+
+  required FilterStatus filter_status = 6 [ default = UNKNOWN ];
+}

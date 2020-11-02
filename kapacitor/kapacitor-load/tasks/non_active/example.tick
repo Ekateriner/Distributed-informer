@@ -1,0 +1,15 @@
+dbrp "telegraf"."autogen"
+
+var cpu = stream
+    |from()
+        .measurement('cpu')
+        .groupBy('host')
+    |window()
+        .period(1m)
+        .every(1m)
+    |mean('usage_idle')
+    |eval(lambda: 100.0 - "mean")
+        .as('used')
+        .keep()
+    |log()
+

@@ -1,0 +1,77 @@
+version: '3'
+
+services:
+    admin:
+        build: ./admin
+        command: python manage.py runserver 0.0.0.0:8000
+        ports:
+            - 8000:8000
+        volumes:
+            - ./admin/cconfigurator:/code
+        networks:
+            - frontend
+            - backend
+    tgbot:
+        build: ./tgbot
+        command: python3 ./main.py
+        networks:
+            - frontend
+    task_creator:
+        build: ./tick_creator
+        ports:
+            - 9091:9091
+        networks:
+            - backend
+    kapacitor:
+        image: kapacitor
+        ports:
+            - 8087:8087
+        networks:
+            - backend
+        volumes:
+            - ./kapacitor/kapacitor-load:/data/.kapacitor/load:ro
+            - ./kapacitor/kapacitor-tmp:/tmp/
+            - ./kapacitor/kapacitor-data:/var/lib/kapacitor:rw
+            - ./kapacitor/kapacitor.config:/etc/kapacitor/kapacitor.conf:ro
+    influxdb:
+        image: influxdb
+        ports:
+            - 8086:8086
+        networks:
+            - backend
+            - frontend
+    telegraf:
+        image: telegraf
+        networks:
+            - backend
+        volumes:
+            - ./telegraf.config:/telegraf.config:ro
+        command: ["--config", "/telegraf.config"]
+    server:
+        build: ./kapacitor/server
+        networks:
+            - backend
+        volumes:
+            - ./kapacitor/kapacitor-tmp:/tmp/
+            - ./kapacitor/kapacitor-load/sideloadFiles:/data/.kapacitor/load/sideloadFiles:ro
+    alert_system:
+        build:
+            context: ./alert-system
+            dockerfile: docker/Dockerfile
+        command: ['./test_full_delivery']
+        ports:
+            - 42000:42000
+        networks:
+            - backend
+    grafana:
+        ports:
+            - 3000:3000
+        image: grafana/grafana
+        networks:
+            - frontend
+networks:
+    frontend:
+    backend:
+volumes:
+    .:
+    

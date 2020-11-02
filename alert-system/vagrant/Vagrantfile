@@ -1,0 +1,26 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu/bionic64"
+  config.vm.box_url = "Vagrantfile"
+  config.vm.provider "virtualbox" do |v|
+    v.name = "alert-system"
+    v.memory = 4096
+    v.cpus = 2
+  end
+
+  config.vm.provision :shell, path: "provision.sh"
+
+  port = 22220
+  config.vm.post_up_message = "Use port #{port} for CLion remote host connection"
+  config.vm.network "forwarded_port", id: "ssh", host: port, guest: 22, auto_correct: false
+
+  config.vm.network "private_network", type: "dhcp"
+
+  remote = "/home/vagrant/alert-system"
+  config.vm.post_up_message += "\nUse #{remote} as the remote deployment directory"
+  config.vm.synced_folder "..", remote, disabled: true
+  config.vm.provision :shell, inline: "sudo sh -c '(mkdir #{remote} 2>/dev/null && chown vagrant:vagrant #{remote}) || true'"
+end
+
