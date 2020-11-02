@@ -1,0 +1,74 @@
+.idea
+
+#-------------------------
+
+admin/*.pyc
+admin/__pycache__
+admin/.idea
+admin/.pytest_cache
+admin/venv
+admin/db.sqlite3
+
+#--------------------------
+
+tgbot/__pycache__/
+tgbot/venv/
+tgbot/config.pyc
+tgbot/.idea
+
+#--------------------------
+
+# Created by .ignore support plugin (hsz.mobi)
+
+alert-system/build
+alert-system/cmake-build-*
+alert-system/*.log
+alert-system/.vagrant
+alert-system/.DS_Store
+
+# IntelliJ project files
+alert-system/.idea
+alert-system/*.iml
+alert-system/out
+alert-system/gen
+
+### C++ template
+# Prerequisites
+alert-system/*.d
+
+# Compiled Object files
+alert-system/*.slo
+alert-system/*.lo
+alert-system/*.o
+alert-system/*.obj
+
+# Precompiled Headers
+alert-system/*.gch
+alert-system/*.pch
+
+# Compiled Dynamic libraries
+alert-system/*.so
+alert-system/*.dylib
+alert-system/*.dll
+
+# Fortran module files
+alert-system/*.mod
+alert-system/*.smod
+
+# Compiled Static libraries
+alert-system/*.lai
+alert-system/*.la
+alert-system/*.a
+alert-system/*.lib
+
+# Executables
+alert-system/*.exe
+alert-system/*.out
+alert-system/*.app
+
+#--------------------------
+
+kapacitor/kapacitor-data/*
+kapacitor/kapacitor-tmp/*
+kapacitor/telegraf.config
+
